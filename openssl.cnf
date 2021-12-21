@@ -1,0 +1,19 @@
+[ req ]
+distinguished_name = req_distinguished_name
+req_extensions = v3_req
+prompt = no
+
+[ req_distinguished_name ]
+CN = admission-service.default.svc
+
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+extendedKeyUsage = clientAuth, serverAuth
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = admission-service
+DNS.2 = admission-service.default
+DNS.3 = admission-service.default.svc
+DNS.4 = admission-service.default.svc.cluster.local

@@ -1,0 +1,25 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: mutation-webhook-example-cfg
+  labels:
+    app: admission-webhook-example
+webhooks:
+  - name: admission-service.default.svc
+    objectSelector:
+      matchLabels:
+        run: test-admission
+    clientConfig:
+      service:
+        name: admission-service
+        namespace: default
+        path: "/mutate"
+        port: 8999
+      caBundle: ${caBundle} # ~/.kube/config  certificate-authority-data
+    rules:
+    - operations: [ "CREATE" ]
+      apiGroups: [""]
+      apiVersions: ["v1"]
+      resources: ["pods"]
+    admissionReviewVersions: ["v1", "v1beta1"]
+    sideEffects: None
